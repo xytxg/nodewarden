@@ -116,7 +116,7 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
 
     .step-container {
       position: relative;
-      height: 442px;
+      height: 447px;
       overflow: hidden;
     }
     .step {
@@ -139,7 +139,6 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       display: none;
       border-radius: 12px;
       padding: 14px;
-      margin: 0 0 12px 0;
       font-size: 15px;
       line-height: 1.45;
       border: 1px solid var(--border);
@@ -304,6 +303,13 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       font-size: 14px;
     }
     .mode-tab.active { background: #111418; color: #fff; }
+    .icon-inline {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: -3px;
+      margin-right: 6px;
+    }
 
     .mode-panel { display: none; margin-top: 12px; }
     .mode-panel.active { display: block; }
@@ -318,6 +324,47 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       border: 1px solid #d5dae1;
       word-break: break-all;
       color: #111418;
+    }
+    .qr-wrap {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .qr-card {
+      border: 1px solid #d5dae1;
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 10px;
+      flex: 0 0 auto;
+    }
+    .qr-title {
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.2;
+      color: #111418;
+      margin-bottom: 8px;
+    }
+    .qr-box {
+      width: 170px;
+      height: 170px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+    .qr-box img {
+      width: 170px;
+      height: 170px;
+      display: block;
+    }
+    .qr-side {
+      min-width: 240px;
+      flex: 1;
     }
 
     .flow-bottom {
@@ -476,15 +523,22 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
             <h3 id="t_s2_fix_title">Fix steps</h3>
             <div id="t_s2_fix_text"></div>
 
-            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="margin-top:12px;padding-top:6px;">
             <h3 id="t_s2_gen_title">Random JWT_SECRET</h3>
             <div class="server" id="secret"></div>
             <div style="height:10px"></div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn primary" type="button" id="refreshSecretBtn" onclick="refreshSecret()">Refresh</button>
-              <button class="btn" type="button" id="copySecretBtn" onclick="copySecret()">Copy</button>
+              <button class="btn primary" type="button" id="refreshSecretBtn" onclick="refreshSecret()">
+                <svg class="icon-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff" aria-hidden="true"><path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/></svg>
+                <span id="refreshSecretBtnText">Refresh</span>
+              </button>
+              <button class="btn" type="button" id="copySecretBtn" onclick="copySecret()">
+                <svg class="icon-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1f1f1f" aria-hidden="true"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
+                <span id="copySecretBtnText">Copy</span>
+              </button>
             </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -565,24 +619,37 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
 
       <section id="step5" class="step">
         <h2 id="t_s5_title">Optional: login TOTP (2FA)</h2>
-        <p class="lead" id="t_s5_desc"></p>
 
         <div class="kv" style="margin-top:14px;">
           <h3 id="t_s5_enable_title">Enable on server (Cloudflare Workers)</h3>
           <ol>
             <li id="t_s5_enable_1"></li>
             <li id="t_s5_enable_2"></li>
-            <li id="t_s5_enable_3"></li>
           </ol>
-        </div>
-
-        <div class="kv">
-          <h3 id="t_s5_client_title">Use in Bitwarden client</h3>
-          <ol>
-            <li id="t_s5_client_1"></li>
-            <li id="t_s5_client_2"></li>
-            <li id="t_s5_client_3"></li>
-          </ol>
+          <div style="margin-top:12px;padding-top:6px;">
+            <div class="qr-wrap">
+              <div class="qr-card">
+                <div class="qr-title"><svg class="icon-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1f1f1f" aria-hidden="true"><path d="M240-120q-60 0-95.5-46.5T124-270l72-272q-33-21-54.5-57T120-680q0-66 47-113t113-47h320q45 0 68 38t3 78l-80 160q-11 20-29.5 32T520-520h-81l-11 40h12q17 0 28.5 11.5T480-440v80q0 17-11.5 28.5T440-320h-54l-30 112q-11 39-43 63.5T240-120Zm0-80q14 0 24-8t14-21l78-291h-83l-72 270q-5 19 7 34.5t32 15.5Zm40-400h240l80-160H280q-33 0-56.5 23.5T200-680q0 33 23.5 56.5T280-600Zm480-160-25-54 145-66 24 55-144 65Zm120 280-145-65 25-55 144 66-24 54ZM760-650v-60h160v60H760Zm-360-30Zm-85 160Z"/></svg><span id="t_s5_qr_title">Scan QR code</span></div>
+                <div class="qr-box">
+                  <img id="totpQr" alt="TOTP QR code">
+                </div>
+              </div>
+              <div class="qr-side">
+                <div class="server" id="totpSeed" style="margin-top:0;"></div>
+                <div style="height:10px"></div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="btn primary" type="button" id="refreshTotpBtn" onclick="refreshTotpSeed()">
+                    <svg class="icon-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff" aria-hidden="true"><path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/></svg>
+                    <span id="refreshTotpBtnText">Refresh</span>
+                  </button>
+                  <button class="btn" type="button" id="copyTotpBtn" onclick="copyTotpSeed()">
+                    <svg class="icon-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1f1f1f" aria-hidden="true"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
+                    <span id="copyTotpBtnText">Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </section>
@@ -696,6 +763,7 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
         s2GenTitle: '随机密钥生成器',
         refresh: '刷新',
         copy: '复制',
+        copySeed: '复制密钥',
         copied: '已复制',
 
         s3Title: '更新策略（可跳过）',
@@ -716,15 +784,10 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
         s4Title: '创建账号',
         s4Desc: '填写信息并创建你的唯一账号。创建成功后会进入登录 TOTP 教程。',
         s5Title: '开启登录 TOTP（2FA，可跳过）',
-        s5Desc: '这一页可跳过。如果你想开启登录二次验证，按下面步骤设置。',
         s5EnableTitle: '服务端开启（Cloudflare Workers）',
         s5Enable1: '打开 Cloudflare 控制台 -> Workers 和 Pages -> NodeWarden -> 设置 -> 变量和机密。',
-        s5Enable2: '新增 Secret：TOTP_SECRET，值填写 Base32 密钥 。',
-        s5Enable3: '保存并等待重新部署。删除 TOTP_SECRET 即关闭登录 2FA。',
-        s5ClientTitle: '客户端使用',
-        s5Client1: '下次登录时先输入主密码。',
-        s5Client2: '客户端会弹出 2FA 验证码输入框，输入验证器里的 6 位码。',
-        s5Client3: '如需可勾选记住此设备（30 天）。',
+        s5Enable2: '新增 Secret：TOTP_SECRET，值填写下方生成的 Base32 密钥。',
+        s5QrTitle: '扫描二维码',
         s6Title: '最终页面',
         s6Desc: '最后一步：查看客户端使用地址，并可选择隐藏初始化页面。',
         nameLabel: '昵称',
@@ -795,6 +858,7 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
         s2GenTitle: 'Random secret generator',
         refresh: 'Refresh',
         copy: 'Copy',
+        copySeed: 'Copy seed',
         copied: 'Copied',
 
         s3Title: 'Sync strategy (optional)',
@@ -815,15 +879,10 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
         s4Title: 'Create account',
         s4Desc: 'Create your single user account. After success, you will see the optional login TOTP guide.',
         s5Title: 'Optional: login TOTP (2FA)',
-        s5Desc: 'You can skip this step. If you want login 2FA, follow the steps below.',
         s5EnableTitle: 'Enable on server (Cloudflare Workers)',
         s5Enable1: 'Open Cloudflare Dashboard -> Workers & Pages -> your service -> Settings -> Variables and Secrets.',
-        s5Enable2: 'Add Secret: TOTP_SECRET, value is a Base32 secret (example: JBSWY3DPEHPK3PXP).',
-        s5Enable3: 'Save and wait for redeploy. Remove TOTP_SECRET to disable login 2FA.',
-        s5ClientTitle: 'Use in Bitwarden client',
-        s5Client1: 'On next login, enter your master password first.',
-        s5Client2: 'Client will prompt 2FA code. Enter the 6-digit code from your authenticator app.',
-        s5Client3: 'Optionally choose remember this device (30 days).',
+        s5Enable2: 'Add Secret: TOTP_SECRET, using the generated Base32 seed below.',
+        s5QrTitle: 'Scan QR code',
         s6Title: 'Final step',
         s6Desc: 'Last step: check your server URL, then optionally hide this setup page.',
         nameLabel: 'Name',
@@ -910,8 +969,8 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       setText('t_s2_fix_title', t('s2FixTitle'));
       renderJwtFixSteps();
       setText('t_s2_gen_title', t('s2GenTitle'));
-      setText('refreshSecretBtn', t('refresh'));
-      setText('copySecretBtn', t('copy'));
+      setText('refreshSecretBtnText', t('refresh'));
+      setText('copySecretBtnText', t('copy'));
 
       setText('t_s3_title', t('s3Title'));
       setText('t_s3_common_title', t('s3CommonTitle'));
@@ -942,15 +1001,12 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       setText('t_hide_desc', t('hideDesc'));
       setText('hideBtn', t('hideBtn'));
       setText('t_s5_title', t('s5Title'));
-      setText('t_s5_desc', t('s5Desc'));
       setText('t_s5_enable_title', t('s5EnableTitle'));
       setText('t_s5_enable_1', t('s5Enable1'));
       setText('t_s5_enable_2', t('s5Enable2'));
-      setText('t_s5_enable_3', t('s5Enable3'));
-      setText('t_s5_client_title', t('s5ClientTitle'));
-      setText('t_s5_client_1', t('s5Client1'));
-      setText('t_s5_client_2', t('s5Client2'));
-      setText('t_s5_client_3', t('s5Client3'));
+      setText('t_s5_qr_title', t('s5QrTitle'));
+      setText('refreshTotpBtnText', t('refresh'));
+      setText('copyTotpBtnText', t('copy'));
       setText('t_s6_title', t('s6Title'));
       setText('t_s6_desc', t('s6Desc'));
       setText('hideModalTitle', t('hideModalTitle'));
@@ -1009,11 +1065,73 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
         document.execCommand('copy');
         ta.remove();
       }
-      const btn = document.getElementById('copySecretBtn');
-      if (btn) {
-        const old = btn.textContent;
-        btn.textContent = t('copied');
-        setTimeout(() => { btn.textContent = old; }, 1000);
+      const btnText = document.getElementById('copySecretBtnText');
+      if (btnText) {
+        const old = btnText.textContent;
+        btnText.textContent = t('copied');
+        setTimeout(() => { btnText.textContent = old; }, 1000);
+      }
+    }
+
+    function randomBase32(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      const bytes = new Uint8Array(length);
+      crypto.getRandomValues(bytes);
+      let out = '';
+      for (let i = 0; i < length; i++) out += chars[bytes[i] % chars.length];
+      return out;
+    }
+
+    function getTotpAccountLabel() {
+      const emailInput = document.getElementById('email');
+      const value = emailInput && typeof emailInput.value === 'string' ? emailInput.value.trim() : '';
+      return value || 'nodewarden@local';
+    }
+
+    function buildTotpUri(seed) {
+      const issuer = 'NodeWarden';
+      const account = getTotpAccountLabel();
+      return 'otpauth://totp/' + encodeURIComponent(issuer + ':' + account)
+        + '?secret=' + encodeURIComponent(seed)
+        + '&issuer=' + encodeURIComponent(issuer)
+        + '&algorithm=SHA1&digits=6&period=30';
+    }
+
+    function renderTotpHelper(seed) {
+      const seedEl = document.getElementById('totpSeed');
+      if (seedEl) seedEl.textContent = seed;
+
+      const uri = buildTotpUri(seed);
+      const qr = document.getElementById('totpQr');
+      if (qr) {
+        const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=' + encodeURIComponent(uri);
+        qr.src = qrUrl;
+      }
+    }
+
+    function refreshTotpSeed() {
+      renderTotpHelper(randomBase32(32));
+    }
+
+    async function copyTotpSeed() {
+      const el = document.getElementById('totpSeed');
+      if (!el) return;
+      const text = el.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      const btnText = document.getElementById('copyTotpBtnText');
+      if (btnText) {
+        const old = btnText.textContent;
+        btnText.textContent = t('copied');
+        setTimeout(() => { btnText.textContent = old; }, 1000);
       }
     }
 
@@ -1289,6 +1407,7 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
     function init() {
       applyI18n();
       refreshSecret();
+      refreshTotpSeed();
       setSyncMode('manual');
       goToStep(1);
       checkStatus();
@@ -1320,6 +1439,15 @@ export function renderRegisterPageHTML(jwtState: JwtSecretState | null): string 
       if (hideModal) {
         hideModal.addEventListener('click', (e) => {
           if (e.target === hideModal) closeHideConfirmModal();
+        });
+      }
+
+      const emailInput = document.getElementById('email');
+      if (emailInput) {
+        emailInput.addEventListener('change', () => {
+          const seedEl = document.getElementById('totpSeed');
+          const seed = seedEl ? (seedEl.textContent || '').trim() : '';
+          if (seed) renderTotpHelper(seed);
         });
       }
 
